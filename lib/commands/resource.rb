@@ -46,7 +46,7 @@ class Resource < Thor::Group
                  "#{content_root}/src/test/resources/sampledata/#{@model_name.downcase}SampleData.xml"
       when "mongodb"
         @repository_import = "mongodb.repository.MongoRepository"
-        @repository_type = "MongoRepository<#{@model_name},Long>"
+        @repository_type = "MongoRepository<#{@model_name},String>"
         @annotation_import = 'import org.springframework.data.mongodb.core.mapping.Document;'
         @entity_annotation = "@Document"
         template "templates/resource/test/integration/#{config.repository_technique}/SampleData.java.erb",
