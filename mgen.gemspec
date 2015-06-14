@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Generator for spring microservices}
   spec.description   = %q{Generator for spring microservices}
-  spec.homepage      = "http://gitlab.rene-richter.de"
+  spec.homepage      = "https://github.com/Richterrettich/mgen"
   spec.license = "GPLv3"
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.executables   = "mgen"
