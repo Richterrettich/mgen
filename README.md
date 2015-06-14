@@ -1,6 +1,6 @@
-# mgen
+# spring-gen
 
-mgen is a rails-like generator for spring microservices.
+spring-gen is a rails-like generator for spring microservices.
 
 ## Installation
 Open a terminal and type 
@@ -15,7 +15,7 @@ gem install lectureGen
 First, create a new microservice:
 
 ```bash
-mgen service com.mycompany.MyService
+spring-gen service com.mycompany.MyService
 #output
       create  MyService/config
       create  MyService/config/checkstyle/checkstyle.xml
@@ -36,7 +36,7 @@ So the argument `com.mycompany.MyService` will get interpreted as groupId: com.m
 You can specify a different spring-data  backend with the `r` option:
 
 ```bash
-mgen service com.mycompany.MyService -r mongodb
+spring-gen service com.mycompany.MyService -r mongodb
 #output
       create  MyService/config
       create  MyService/config/checkstyle/checkstyle.xml
@@ -52,14 +52,14 @@ mgen service com.mycompany.MyService -r mongodb
       create  MyService/service.yml
 ```
 
-with mongodb as a backend, different classes will be generated. Mgen currently supports
+with mongodb as a backend, different classes will be generated. spring-gen currently supports
 jpa, mongodb and neo4j.
 
 After creating the project layout, enter the project-root and generate some resources:
 
 ```bash
 cd MyService
-mgen resource User firstname:String lastname:String
+spring-gen resource User firstname:String lastname:String
 #output
       create  src/test/resources/sampledata/userSampleData.xml
       create  src/main/java/com/mycompany/model/BaseEntity.java
@@ -70,12 +70,12 @@ mgen resource User firstname:String lastname:String
       create  src/test/java/util/TestUtil.java
 ```
 This will generate a new user-model (containing string attributes for firstname and lastname)
-as well as a repository that matches your spring-data choice. Mgen will assume that you use
+as well as a repository that matches your spring-data choice. spring-gen will assume that you use
 spring-data-rest. If you don't want to use spring-data-rest you can set the --full option,
 which will generate additional classes like REST-controllers:
 
 ```bash
-mgen resource User firstname:String lastname:String --full
+spring-gen resource User firstname:String lastname:String --full
 # output
       create  src/test/resources/sampledata/userSampleData.xml
       create  src/main/java/com/mycompany/model/BaseEntity.java
@@ -111,7 +111,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/Richterrettich/mgen/fork )
+1. Fork it ( https://github.com/Richterrettich/spring-gen/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

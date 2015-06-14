@@ -1,20 +1,20 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mgen/version'
+require 'spring-gen/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "mgen"
-  spec.version       = Mgen::VERSION
+  spec.name          = "spring-gen"
+  spec.version       = SpringGen::VERSION
   spec.authors       = ["Rene Richter"]
   spec.email         = ["Richterrettich@gmail.com"]
 
   spec.summary       = %q{Generator for spring microservices}
   spec.description   = %q{Generator for spring microservices}
-  spec.homepage      = "https://github.com/Richterrettich/mgen"
+  spec.homepage      = "https://github.com/Richterrettich/spring-gen"
   spec.license = "GPLv3"
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.executables   = "mgen"
+  spec.executables   = "spring-gen"
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.9"
