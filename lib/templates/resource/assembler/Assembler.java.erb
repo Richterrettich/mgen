@@ -1,4 +1,4 @@
-package <%=@group_id%>.assembler;
+package <%=@package%>.assembler;
 
 /*
  * Copyright (c) 2015 <%=@user_name%>
@@ -18,9 +18,9 @@ package <%=@group_id%>.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import <%=@group_id%>.model.<%=@model_name%>;
-import <%=@group_id%>.controller.<%=@model_name%>Controller;
-import <%=@group_id%>.resource.<%=@model_name%>Resource;
+import <%=@package%>.model.<%=@model_name%>;
+import <%=@package%>.controller.<%=@model_name%>Controller;
+import <%=@package%>.resource.<%=@model_name%>Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;

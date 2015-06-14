@@ -1,4 +1,4 @@
-package <%=@group_id%>.integration.<%=@model_name.downcase%>;
+package <%=@package%>.integration.<%=@model_name.downcase%>;
 
 /*
 * Copyright (c) 2015 <%=@user_name%>.
@@ -29,21 +29,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 /**
- * Configuration class for <%=@group_id%> integration test.
+ * Configuration class for <%=@package%> integration test.
  * @author <%=@user_name%>
  */
 @Configuration
-<%if @full%>@ComponentScan(basePackages = {"<%=@group_id%>.repository",
-    "<%=@group_id%>.controller",
-    "<%=@group_id%>.assembler",
-    "<%=@group_id%>.resource",
-    "<%=@group_id%>.integration"})
-<%else%>@ComponentScan(basePackages = {"<%=@group_id%>.repository","<%=@group_id%>.integration"})<%end%>
+<%if @full%>@ComponentScan(basePackages = {"<%=@package%>.repository",
+    "<%=@package%>.controller",
+    "<%=@package%>.assembler",
+    "<%=@package%>.resource",
+    "<%=@package%>.integration"})
+<%else%>@ComponentScan(basePackages = {"<%=@package%>.repository","<%=@package%>.integration"})<%end%>
 @EnableHypermediaSupport(type = {EnableHypermediaSupport.HypermediaType.HAL})
 @EnableSpringDataWebSupport
 @EnableWebMvc
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "<%=@group_id%>.repository")
+@EnableMongoRepositories(basePackages = "<%=@package%>.repository")
 @EnableTransactionManagement
 public class <%=@model_name%>IntegrationTestConfig extends WebMvcConfigurerAdapter {
 

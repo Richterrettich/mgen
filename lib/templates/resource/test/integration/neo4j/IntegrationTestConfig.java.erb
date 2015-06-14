@@ -1,4 +1,4 @@
-package <%=@group_id%>.integration.<%=@model_name.downcase%>;
+package <%=@package%>.integration.<%=@model_name.downcase%>;
 
 /*
 * Copyright (c) 2015 <%=@user_name%>.
@@ -27,21 +27,21 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * Configuration class for <%=@group_id%> integration test.
+ * Configuration class for <%=@package%> integration test.
  * @author <%=@user_name%>
  */
 @Configuration
-<%if @full%>@ComponentScan(basePackages = {"<%=@group_id%>.repository",
-    "<%=@group_id%>.controller",
-    "<%=@group_id%>.assembler",
-    "<%=@group_id%>.resource"})
-<%else%>@ComponentScan(basePackages = "<%=@group_id%>.repository")<%end%>
+<%if @full%>@ComponentScan(basePackages = {"<%=@package%>.repository",
+    "<%=@package%>.controller",
+    "<%=@package%>.assembler",
+    "<%=@package%>.resource"})
+<%else%>@ComponentScan(basePackages = "<%=@package%>.repository")<%end%>
 @EnableHypermediaSupport(type = {EnableHypermediaSupport.HypermediaType.HAL})
 @EnableSpringDataWebSupport
 @EnableWebMvc
 @EnableAutoConfiguration
-@EnableJpaRepositories(basePackages = "<%=@group_id%>.repository")
+@EnableJpaRepositories(basePackages = "<%=@package%>.repository")
 @EnableTransactionManagement
-@EntityScan(basePackages = {"<%=@group_id%>.model"})
+@EntityScan(basePackages = {"<%=@package%>.model"})
 public class <%=@model_name%>IntegrationTestConfig extends WebMvcConfigurerAdapter {
 }

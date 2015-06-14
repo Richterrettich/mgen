@@ -30,7 +30,8 @@ class Resource < Thor::Group
   def create_model
     @user_name = user_name
     @user_email = user_email
-    @group_id = config.group_id
+    @package = config.group_id.split(".").each {|part| part.gsub!(/\W/,"")}.join(".")
+    fs_path = @package.gsub(".","/")
     @artifact_id = config.artifact_id
     @full = options['full']
 
@@ -49,35 +50,35 @@ class Resource < Thor::Group
         @annotation_import = 'import org.springframework.data.mongodb.core.mapping.Document;'
         @entity_annotation = "@Document"
         template "templates/resource/test/integration/#{config.repository_technique}/SampleData.java.erb",
-                 "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
+                 "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
       when "neo4j"
         @repository_import = "neo4j.repository.GraphRepository"
         @repository_type = "GraphRepository<#{@model_name}>"
         @entity_annotation = "@NodeEntity"
         template "templates/resource/test/integration/#{config.repository_technique}/SampleData.java.erb",
-                 "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
+                 "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
       else
         raise ("not a suitable repository-technique.")
     end
 
 
     template "templates/resource/model/#{config.repository_technique.capitalize}BaseEntity.java.erb",
-             "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/model/BaseEntity.java"
+             "#{content_root}/src/main/java/#{fs_path}/model/BaseEntity.java"
     template(
       'templates/resource/model/Model.java.erb',
-      "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/model/#{@model_name}.java")
+      "#{content_root}/src/main/java/#{fs_path}/model/#{@model_name}.java")
 
     template(
         'templates/resource/repository/Repository.java.erb',
-        "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/repository/#{@model_name}Repository.java")
+        "#{content_root}/src/main/java/#{fs_path}/repository/#{@model_name}Repository.java")
 
     template(
         "templates/resource/test/integration/#{config.repository_technique}/IntegrationTestConfig.java.erb",
-        "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/integration/#{@model_name.downcase}/#{@model_name}IntegrationTestConfig.java")
+        "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}IntegrationTestConfig.java")
 
     template(
         "templates/resource/test/integration/#{config.repository_technique}/IntegrationTest.java.erb",
-        "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/integration/#{@model_name.downcase}/#{@model_name}IntegrationTest.java")
+        "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}IntegrationTest.java")
 
 
     template(
@@ -88,40 +89,40 @@ class Resource < Thor::Group
 
       template(
           'templates/resource/test/unit/controller/ControllerUnitTestConfig.java.erb',
-          "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/unit/#{@model_name.downcase}/controller/#{@model_name}ControllerUnitTestConfig.java")
+          "#{content_root}/src/test/java/#{fs_path}/unit/#{@model_name.downcase}/controller/#{@model_name}ControllerUnitTestConfig.java")
 
       template(
           'templates/resource/test/unit/controller/ControllerUnitTest.java.erb',
-          "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/unit/#{@model_name.downcase}/controller/#{@model_name}ControllerUnitTest.java")
+          "#{content_root}/src/test/java/#{fs_path}/unit/#{@model_name.downcase}/controller/#{@model_name}ControllerUnitTest.java")
 
       template(
           'templates/resource/test/unit/assembler/AssemblerUnitTestConfig.java.erb',
-          "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/unit/#{@model_name.downcase}/assembler/#{@model_name}AssemblerUnitTestConfig.java")
+          "#{content_root}/src/test/java/#{fs_path}/unit/#{@model_name.downcase}/assembler/#{@model_name}AssemblerUnitTestConfig.java")
 
       template(
           'templates/resource/test/unit/assembler/AssemblerUnitTest.java.erb',
-          "#{content_root}/src/test/java/#{@group_id.gsub(".","/")}/unit/#{@model_name.downcase}/assembler/#{@model_name}AssemblerUnitTest.java")
+          "#{content_root}/src/test/java/#{fs_path}/unit/#{@model_name.downcase}/assembler/#{@model_name}AssemblerUnitTest.java")
 
 
       template 'templates/resource/controller/BaseController.java.erb',
-                "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/controller/BaseController.java"  unless File.exist?("#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/controller/BaseController.java")
+                "#{content_root}/src/main/java/#{fs_path}/controller/BaseController.java"  unless File.exist?("#{content_root}/src/main/java/#{fs_path}/controller/BaseController.java")
 
       template(
           'templates/resource/controller/Controller.java.erb',
-          "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/controller/#{@model_name}Controller.java")
+          "#{content_root}/src/main/java/#{fs_path}/controller/#{@model_name}Controller.java")
 
       template 'templates/resource/assembler/BaseAssembler.java.erb',
-                "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/assembler/BaseAssembler.java" unless File.exist?("#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/assembler/BaseAssembler.java")
+                "#{content_root}/src/main/java/#{fs_path}/assembler/BaseAssembler.java" unless File.exist?("#{content_root}/src/main/java/#{fs_path}/assembler/BaseAssembler.java")
       template(
           'templates/resource/assembler/Assembler.java.erb',
-          "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/assembler/#{@model_name}Assembler.java")
+          "#{content_root}/src/main/java/#{fs_path}/assembler/#{@model_name}Assembler.java")
 
       template(
           'templates/resource/resource/Resource.java.erb',
-          "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/resource/#{@model_name}Resource.java")
+          "#{content_root}/src/main/java/#{fs_path}/resource/#{@model_name}Resource.java")
 
       template 'templates/resource/exception/NotCreatedException.java.erb',
-                "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/exception/NotCreatedException.java" unless File.exist? "#{content_root}/src/main/java/#{@group_id.gsub(".","/")}/exception/NotCreatedException.java"
+                "#{content_root}/src/main/java/#{fs_path}/exception/NotCreatedException.java" unless File.exist? "#{content_root}/src/main/java/#{fs_path}/exception/NotCreatedException.java"
 
     end
   end

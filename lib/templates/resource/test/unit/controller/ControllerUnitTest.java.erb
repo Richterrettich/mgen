@@ -1,4 +1,4 @@
-package <%=@group_id%>.unit.<%=@model_name.downcase%>.controller;
+package <%=@package%>.unit.<%=@model_name.downcase%>.controller;
 /*
  * Copyright (c) 2015 <%=@user_name%>.
  * This program is free software; you can redistribute it and/or modify
@@ -23,11 +23,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import <%=@group_id%>.assembler.<%=@model_name%>Assembler;
-import <%=@group_id%>.controller.<%=@model_name%>Controller;
-import <%=@group_id%>.repository.<%=@model_name%>Repository;
-import <%=@group_id%>.resource.<%=@model_name%>Resource;
-import <%=@group_id%>.model.<%=@model_name%>;
+import <%=@package%>.assembler.<%=@model_name%>Assembler;
+import <%=@package%>.controller.<%=@model_name%>Controller;
+import <%=@package%>.repository.<%=@model_name%>Repository;
+import <%=@package%>.resource.<%=@model_name%>Resource;
+import <%=@package%>.model.<%=@model_name%>;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

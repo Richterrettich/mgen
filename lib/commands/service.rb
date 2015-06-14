@@ -22,6 +22,7 @@ class Service < Thor::Group
     parts = @name.split(".")
     @name = @artifact_id = parts.pop
     @group_id = parts.length > 0 ?  parts.join('.') : @name
+    @package = @group_id.split(".").each {|part| part.gsub!(/\W/,"")}.join(".")
   end
 
   def init_git
