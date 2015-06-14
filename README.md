@@ -5,7 +5,7 @@ spring-gen is a rails-like generator for spring microservices.
 ## Installation
 Open a terminal and type 
 ```bash
-gem install lectureGen
+gem install spring-gen
 ```
 
 
