@@ -1,0 +1,108 @@
+spring:
+  profiles:
+    active: development
+
+---
+
+spring:
+  profiles: development
+  data:
+    rest:
+      basePath: / #root URI for Spring Data REST
+      defaultPageSize: 20 #change default number of items served in a single page
+      maxPageSize: 100 #change maximum number of items in a single page
+      #pageParamName: #change name of the query parameter for selecting pages
+      #limitParamName: #change name of the query parameter for number of items to show in a page
+      #sortParamName: #change name of the query parameter for sorting
+      #defaultMediaType: #change default media type to use when none is specified
+      returnBodyOnCreate: false #change if a body should be returned on creating a new entity
+      returnBodyOnupdate: false #change if a body should be returned on updating an entity
+  <%if @repository_technique == "jpa"%>
+    jpa:
+      open-in-view: true
+      show-sql: true
+      repositories.enabled: true # if spring data repository support is enabled
+
+  <%elsif @repository_technique == "mongodb"%>
+
+    mongodb
+      host: localhost # the db host
+      port: 27017 # the connection port (defaults to 27107)
+      uri: mongodb://localhost/test # connection URL
+      database: test
+      #authentication-database:
+      #grid-fs-database:
+      username: test
+      password: test
+      repositories.enabled: true # if spring data repository support is enabled
+
+
+  <%elsif @repository_technique == "neo4j"%>
+
+
+
+
+  <%end%>
+
+
+---
+
+spring:
+  profiles: production
+  data:
+    rest:
+      basePath: / #root URI for Spring Data REST
+      defaultPageSize: 20 #change default number of items served in a single page
+      maxPageSize: 100 #change maximum number of items in a single page
+      #pageParamName: #change name of the query parameter for selecting pages
+      #limitParamName: #change name of the query parameter for number of items to show in a page
+      #sortParamName: #change name of the query parameter for sorting
+      #defaultMediaType: #change default media type to use when none is specified
+      returnBodyOnCreate: false #change if a body should be returned on creating a new entity
+      returnBodyOnupdate: false #change if a body should be returned on updating an entity
+  <%if @repository_technique == "jpa"%>
+    jpa:
+      open-in-view: true
+      show-sql: true
+      repositories.enabled: true # if spring data repository support is enabled
+
+  datasource:
+    initialize: true # populate using data.sql
+    sql-script-encoding: UTF-8 # a charset for reading SQL scripts
+    separator: ; # statement separator in SQL initialization scripts
+    #driver-class-name: # JDBC Settings...
+    #url:
+    #username:
+    #password:
+    #jndi-name: # For JNDI lookup (class, url, username & password are ignored when set)
+    #max-active:100 # Advanced configuration...
+    #max-idle:8
+    #min-idle:8
+    #initial-size:10
+    #validation-query:
+
+  <%elsif @repository_technique == "mongodb"%>
+
+    mongodb
+      host: localhost # the db host
+      port: 27017 # the connection port (defaults to 27107)
+      uri: mongodb://localhost/production # connection URL
+      database: production
+      #authentication-database:
+      #grid-fs-database:
+      username: production
+      password: production
+      repositories.enabled: true # if spring data repository support is enabled
+
+
+  <%elsif @repository_technique == "neo4j"%>
+
+
+
+
+  <%end%>
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

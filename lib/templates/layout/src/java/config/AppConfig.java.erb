@@ -1,0 +1,54 @@
+package <%=@group_id%>.config;
+
+
+/*
+* Copyright (c) 2015 <%=@user_name%>.
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software Foundation,
+* Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+*/
+
+<%if @repository_technique == "jpa"-%>
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+<%elsif @repository_technique == "mongodb"-%>
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+<%elsif @repository_technique == "neo4j"-%>
+<%end-%>
+import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+/**
+* Application config-class.
+*
+* @author  <%=@user_name%>
+*/
+
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages = {"<%=@group_id%>"})
+<%if @repository_technique == "jpa"-%>
+@EnableJpaRepositories(basePackages = "<%=@group_id%>.repository")
+<%elsif @repository_technique == "mongodb"-%>
+@EnableMongoRepositories(basePackages = "<%=@group_id%>.repository")
+<%elsif @repository_technique == "neo4j"-%>
+<%end-%>
+@EntityScan(basePackages = "<%=@group_id%>.repository")
+@EnableSpringDataWebSupport
+public class AppConfig {
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+  }
+}

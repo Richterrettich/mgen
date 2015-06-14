@@ -1,0 +1,115 @@
+package <%=@group_id%>.unit.<%=@model_name.downcase%>.controller;
+/*
+ * Copyright (c) 2015 <%=@user_name%>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import <%=@group_id%>.assembler.<%=@model_name%>Assembler;
+import <%=@group_id%>.controller.<%=@model_name%>Controller;
+import <%=@group_id%>.repository.<%=@model_name%>Repository;
+import <%=@group_id%>.resource.<%=@model_name%>Resource;
+import <%=@group_id%>.model.<%=@model_name%>;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+* Unit test for <%=@model_name%> controllers.
+* @author <%=@user_name%>
+*/
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {<%=@model_name%>ControllerUnitTestConfig.class})
+public class <%=@model_name%>ControllerUnitTest {
+
+  @Autowired
+  private <%=@model_name%>Repository <%=@model_name.downcase%>Repository;
+
+  @Autowired
+  private <%=@model_name%>Assembler <%=@model_name.downcase%>Assembler;
+
+  @Autowired
+  private PagedResourcesAssembler pagedResourcesAssembler;
+
+  @Autowired
+  private <%=@model_name%>Controller testInstance;
+
+
+  /**
+   * sets up the test.
+   */
+  @Before
+  public void setUp() {
+    reset(<%=@model_name.downcase%>Repository,<%=@model_name.downcase%>Assembler,pagedResourcesAssembler);
+  }
+
+
+  @Test
+  public void getAllShouldReturnAPageOf<%=@model_name%>() throws Exception {
+
+    List<<%=@model_name%>> sampleData = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      <%=@model_name%> instance = new <%=@model_name%>();
+      instance.setId(i);
+      sampleData.add(instance);
+    }
+    Page<<%=@model_name%>> page = new PageImpl<>(sampleData);
+    when(<%=@model_name.downcase%>Repository.findAll(any(Pageable.class))).thenReturn(page);
+    when(pagedResourcesAssembler.toResource(page,<%=@model_name.downcase%>Assembler))
+      .thenReturn(new PagedResources(sampleData,null));
+
+    Pageable pageable = new PageRequest(2,2);
+    PagedResources result = testInstance.getAll(pageable,pagedResourcesAssembler);
+    assertEquals(10,result.getContent().size());
+    verify(<%=@model_name.downcase%>Repository, times(1)).findAll(any(Pageable.class));
+    verify(pagedResourcesAssembler,times(1)).toResource(eq(page),eq(<%=@model_name.downcase%>Assembler));
+    verifyNoMoreInteractions(<%=@model_name.downcase%>Repository);
+    verifyNoMoreInteractions(<%=@model_name.downcase%>Assembler);
+    verifyNoMoreInteractions(pagedResourcesAssembler);
+  }
+
+  @Test
+  public void getOneShouldReturnResponseContainingTheDataOfOne<%=@model_name%>AsJson() throws Exception {
+    <%=@model_name%> instance = new <%=@model_name%>();
+    instance.setId(1L);
+    <%=@model_name%>Resource testResource = new <%=@model_name%>Resource(instance);
+    when(<%=@model_name.downcase%>Repository.findOne(1L)).thenReturn(instance);
+    when(<%=@model_name.downcase%>Assembler.toResource(instance)).thenReturn(testResource);
+    ResponseEntity response = testInstance.getOne(1L);
+    assertEquals(200,response.getStatusCode().value());
+    verify(<%=@model_name.downcase%>Repository, times(1)).findOne(1L);
+    verify(<%=@model_name.downcase%>Assembler, times(1)).toResource(instance);
+  }
+}

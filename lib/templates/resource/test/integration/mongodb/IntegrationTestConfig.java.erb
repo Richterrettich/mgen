@@ -1,0 +1,60 @@
+package <%=@group_id%>.integration.<%=@model_name.downcase%>;
+
+/*
+* Copyright (c) 2015 <%=@user_name%>.
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software Foundation,
+* Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+*/
+
+import com.github.fakemongo.Fongo;
+import com.mongodb.Mongo;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+/**
+ * Configuration class for <%=@group_id%> integration test.
+ * @author <%=@user_name%>
+ */
+@Configuration
+<%if @full%>@ComponentScan(basePackages = {"<%=@group_id%>.repository",
+    "<%=@group_id%>.controller",
+    "<%=@group_id%>.assembler",
+    "<%=@group_id%>.resource",
+    "<%=@group_id%>.integration"})
+<%else%>@ComponentScan(basePackages = {"<%=@group_id%>.repository","<%=@group_id%>.integration"})<%end%>
+@EnableHypermediaSupport(type = {EnableHypermediaSupport.HypermediaType.HAL})
+@EnableSpringDataWebSupport
+@EnableWebMvc
+@EnableAutoConfiguration
+@EnableMongoRepositories(basePackages = "<%=@group_id%>.repository")
+@EnableTransactionManagement
+public class <%=@model_name%>IntegrationTestConfig extends WebMvcConfigurerAdapter {
+
+  @Bean
+  public Mongo mongo() {
+    Fongo fongo = new Fongo("test");
+    return fongo.getMongo();
+   }
+    
+  @Bean
+  public MongoTemplate mongoTemplate() {
+    return new MongoTemplate(mongo(),"<%=@model_name%>");
+  }
+}

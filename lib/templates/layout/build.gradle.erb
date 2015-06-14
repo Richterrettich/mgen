@@ -1,0 +1,105 @@
+/*
+* Copyright (c) 2015 <%=@user_name%>.
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software Foundation,
+* Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+*/
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+  }
+}
+
+repositories {
+  mavenCentral()
+
+  maven {
+    url 'http://repo.spring.io/libs-snapshot-continuous-local'
+  }
+  maven {
+    url 'http://maven.springframework.org/milestone/'
+  }
+
+  maven {
+    url 'http://repo.spring.io/libs-snapshot'
+  }
+
+
+
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: "checkstyle"
+
+checkstyle{
+  checkstyle {
+    toolVersion = "6.6"
+  }
+}
+
+task checkstyle(type: Checkstyle) {
+  configFile file("config/checkstyle/checkstyle.xml")
+  source './'
+  include '**/*.java'
+  classpath = files()
+}
+
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-tomcat")
+  compile("org.springframework.boot:spring-boot-starter-data-rest")
+  compile("org.springframework.boot:spring-boot-starter-data-<%=@repository_technique%>")
+
+
+  compile("org.springframework.amqp:spring-rabbit")
+
+  compile 'org.springframework.cloud:spring-cloud-starter-eureka:1.0.1.RELEASE'
+
+  compile 'org.springframework.hateoas:spring-hateoas'
+
+  compile 'org.apache.commons:commons-lang3:3.4'
+
+  <%if @repository_technique == "jpa"%>
+    compile 'com.h2database:h2:1.4.187'
+    testCompile "org.dbunit:dbunit:2.5.0"
+    testCompile "com.github.springtestdbunit:spring-test-dbunit:1.2.1"
+  <%elsif @repository_technique == "mongodb"%>
+    testCompile 'com.github.fakemongo:fongo:1.6.2'
+  <%elsif @repository_technique == "neo4j"%>
+
+  <%end%>
+
+
+  testCompile "org.springframework:spring-test:4.1.6.RELEASE"
+  testCompile "org.mockito:mockito-core:1.9.5"
+  testCompile "org.hamcrest:hamcrest-all:1.3"
+  testCompile "com.jayway.jsonpath:json-path-assert:2.0.0"
+  testCompile("junit:junit")
+
+
+
+}
+
+task wrapper(type: Wrapper) {
+gradleVersion = '2.3'
+}

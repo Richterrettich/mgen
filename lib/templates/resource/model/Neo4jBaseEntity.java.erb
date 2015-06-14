@@ -1,0 +1,81 @@
+package <%=@group_id%>.model;
+
+/*
+ * Copyright (c) 2015 <%=@user_name%>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.springframework.hateoas.Identifiable;
+
+/**
+ * Base entity for neo4j entities.
+ *
+ * @author <%=@user_name%>
+ */
+@NodeEntity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public abstract class BaseEntity implements Identifiable<Long> {
+
+  @GraphId
+  private Long nodeId;
+
+  private long id;
+
+  public Long getNodeId() {
+    return nodeId;
+  }
+
+  public void setNodeId(Long nodeId) {
+    this.nodeId = nodeId;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+
+    if (other == null || getClass() != other.getClass()) {
+      return false;
+    }
+
+    BaseEntity entity = (BaseEntity) other;
+    if (id == 0) {
+      return super.equals(other);
+    }
+    return id == entity.getId();
+
+  }
+
+  @Override
+  public int hashCode() {
+    return (int)id;
+  }
+
+}

@@ -1,0 +1,106 @@
+package <%=@group_id%>.controller;
+
+/*
+ * Copyright (c) 2015 <%=@user_name%>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
+import <%=@group_id%>.assembler.<%=@model_name%>Assembler;
+import <%=@group_id%>.model.<%=@model_name%>;
+import <%=@group_id%>.resource.<%=@model_name%>Resource;
+import <%=@group_id%>.repository.<%=@model_name%>Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+
+/**
+ * A controller for <%=@model_name%> Routes.
+ * @author <%=@user_name%>
+ */
+@RestController
+@RequestMapping("/<%=@model_name.downcase%>s")
+@ExposesResourceFor(<%=@model_name%>.class)
+public class <%=@model_name%>Controller extends BaseController {
+
+  @Autowired
+  <%=@model_name%>Assembler <%=@model_name.downcase%>Assembler;
+
+  @Autowired
+  <%=@model_name%>Repository <%=@model_name.downcase%>Repository;
+
+
+  /**
+   * Returns a list of <%=@model_name.downcase%>s.
+   *
+   * @param pageable  The number of items, gotten through the url
+   * @param assembler the assembler injected by spring.
+   * @return a Resource representing the page.
+   */
+  @RequestMapping(method = RequestMethod.GET)
+  public PagedResources<<%=@model_name%>> getAll(@PageableDefault(size = 20, page = 0)
+                                         Pageable pageable,
+                                         PagedResourcesAssembler assembler) {
+
+    Page<<%=@model_name%>> pageResult = this.<%=@model_name.downcase%>Repository.findAll(pageable);
+    return assembler.toResource(pageResult, <%=@model_name.downcase%>Assembler);
+  }
+
+  /**
+   * @param entity the <%=@model_name.downcase%> from the post-request. This <%=@model_name.downcase%> is deserialized by
+   *              jackson.
+   * @return A respoonse containing a link to the new resource.
+   */
+  @RequestMapping(method = RequestMethod.POST)
+  public ResponseEntity<?> create(@RequestBody <%=@model_name%> entity) {
+    return super.createEntity(this.<%=@model_name.downcase%>Repository.save(entity));
+  }
+
+  /**
+   * Returns one <%=@model_name%>.
+   *
+   * @param id the id of the topic to return.
+   * @return a response.
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  public ResponseEntity<<%=@model_name%>Resource> getOne(@PathVariable Long id) {
+    <%=@model_name%>Resource result
+        = <%=@model_name.downcase%>Assembler.toResource(<%=@model_name.downcase%>Repository.findOne(id));
+    return ResponseEntity.ok().body(result);
+  }
+
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<?> delete(@PathVariable Long id) {
+    <%=@model_name.downcase%>Repository.delete(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  public ResponseEntity<?> update(@PathVariable Long id,
+                                  @RequestBody <%=@model_name%> newValues) {
+    <%=@model_name.downcase%>Repository.save(newValues);
+    return ResponseEntity.noContent().build();
+  }
+
+
+}

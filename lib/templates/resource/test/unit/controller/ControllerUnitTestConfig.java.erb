@@ -1,0 +1,64 @@
+package <%=@group_id%>.unit.<%=@model_name.downcase%>.controller;
+
+/*
+* Copyright (c) 2015 <%=@user_name%>.
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software Foundation,
+* Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+*/
+
+
+import <%=@group_id%>.assembler.<%=@model_name%>Assembler;
+import <%=@group_id%>.repository.<%=@model_name%>Repository;
+import <%=@group_id%>.controller.<%=@model_name%>Controller;
+import org.mockito.Mockito;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+
+/**
+* Configuration for <%=@model_name%> controller unit tests.
+* @author <%=@user_name%>
+*/
+@Configuration
+@EnableHypermediaSupport(type = {EnableHypermediaSupport.HypermediaType.HAL})
+public class <%=@model_name%>ControllerUnitTestConfig {
+
+
+  @Bean
+  public <%=@model_name%>Controller <%=@model_name.downcase%>Controller() {
+    return new <%=@model_name%>Controller();
+  }
+
+  @Bean
+  public LoadBalancerClient loadBalancerClient() {
+    return  Mockito.mock(LoadBalancerClient.class);
+  }
+
+  @Bean
+  public <%=@model_name%>Repository <%=@model_name.downcase%>Repository() {
+    return Mockito.mock(<%=@model_name%>Repository.class);
+  }
+
+  @Bean
+  public <%=@model_name%>Assembler <%=@model_name.downcase%>Assembler() {
+    return Mockito.mock(<%=@model_name%>Assembler.class);
+  }
+
+  @Bean
+  public PagedResourcesAssembler pagedResourcesAssembler() {
+    return Mockito.mock(PagedResourcesAssembler.class);
+  }
+
+
+}
