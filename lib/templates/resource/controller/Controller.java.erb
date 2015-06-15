@@ -67,6 +67,7 @@ public class <%=@model_name%>Controller extends BaseController {
   }
 
   /**
+   * Creates a new <%=@model_name%>
    * @param entity the <%=@model_name.downcase%> from the post-request. This <%=@model_name.downcase%> is deserialized by
    *              jackson.
    * @return A respoonse containing a link to the new resource.
@@ -79,7 +80,7 @@ public class <%=@model_name%>Controller extends BaseController {
   /**
    * Returns one <%=@model_name%>.
    *
-   * @param id the id of the topic to return.
+   * @param id the id of the  <%=@model_name.downcase%> to return.
    * @return a response.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
