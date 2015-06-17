@@ -64,7 +64,7 @@ class Resource < Thor::Group
 
 
     template "templates/resource/model/#{config.repository_technique.capitalize}BaseEntity.java.erb",
-             "#{content_root}/src/main/java/#{fs_path}/model/BaseEntity.java"
+             "#{content_root}/src/main/java/#{fs_path}/model/BaseEntity.java" unless File.exist?("#{content_root}/src/main/java/#{fs_path}/model/BaseEntity.java")
     template(
       'templates/resource/model/Model.java.erb',
       "#{content_root}/src/main/java/#{fs_path}/model/#{@model_name}.java")
