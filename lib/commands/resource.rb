@@ -30,15 +30,16 @@ class Resource < Thor::Group
   def create_model
     @user_name = user_name
     @user_email = user_email
-    @package = config.group_id.split(".").each {|part| part.gsub!(/\W/,"")}.join(".")
-    fs_path = @package.gsub(".","/")
+    @package = config.group_id.split('.').each {|part| part.gsub!(/\W/,'')}.join('.')
+    fs_path = @package.gsub('.','/')
     @artifact_id = config.artifact_id
     @full = options['full']
+    @licence = licence
 
 
     case config.repository_technique
-      when "jpa"
-        @repository_import = "jpa.repository.JpaRepository"
+      when 'jpa'
+        @repository_import = 'jpa.repository.JpaRepository'
         @repository_type = "JpaRepository<#{@model_name},Long>"
         @entity_annotation = "@Entity"
         @annotation_import = "import javax.persistence.Entity;"
