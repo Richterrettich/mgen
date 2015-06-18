@@ -91,13 +91,13 @@ public class <%=@model_name%>ControllerUnitTest {
   @Test
   public void getOneShouldReturnResponseContainingTheDataOfOne<%=@model_name%>AsJson() throws Exception {
     <%=@model_name%> instance = new <%=@model_name%>();
-    instance.setId(1L);
+    instance.setId(<%=augment_test_id(1)%>);
     <%=@model_name%>Resource testResource = new <%=@model_name%>Resource(instance);
-    when(<%=@model_name.downcase%>Repository.findOne(1L)).thenReturn(instance);
+    when(<%=@model_name.downcase%>Repository.findOne(<%=augment_test_id(1)%>)).thenReturn(instance);
     when(<%=@model_name.downcase%>Assembler.toResource(instance)).thenReturn(testResource);
-    ResponseEntity response = testInstance.getOne(1L);
+    ResponseEntity response = testInstance.getOne(<%=augment_test_id(1)%>);
     assertEquals(200,response.getStatusCode().value());
-    verify(<%=@model_name.downcase%>Repository, times(1)).findOne(1L);
+    verify(<%=@model_name.downcase%>Repository, times(1)).findOne(<%=augment_test_id(1)%>);
     verify(<%=@model_name.downcase%>Assembler, times(1)).toResource(instance);
   }
 }
