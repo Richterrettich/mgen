@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'thor', '~> 0.19.1'
   spec.add_runtime_dependency 'git', '~> 1.2.9.1'
+  spec.add_runtime_dependency 'activesupport', '~> 4.2.1'
 end

@@ -1,0 +1,16 @@
+package <%=@package%>.repository;
+
+<%=@licence%>
+
+import <%=@package%>.model.<%=@model_name%>;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+/**
+* A repository for <%=@model_name.downcase%>s
+* @author <%=@user_name%>
+*/
+public interface <%=@model_name%>Repository extends JpaRepository<<%=@model_name%>,Long> {
+
+}

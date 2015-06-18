@@ -66,17 +66,9 @@ dependencies {
 
   compile 'org.apache.commons:commons-lang3:3.4'
 
-  <%if @repository_technique == "jpa"%>
-    compile 'com.h2database:h2:1.4.187'
-    testCompile "org.dbunit:dbunit:2.5.0"
-    testCompile "com.github.springtestdbunit:spring-test-dbunit:1.2.1"
-  <%elsif @repository_technique == "mongodb"%>
-    testCompile 'com.github.fakemongo:fongo:1.6.2'
-  <%elsif @repository_technique == "neo4j"%>
-
-  <%end%>
-
-
+  testCompile 'com.h2database:h2:1.4.187'
+  testCompile "org.dbunit:dbunit:2.5.0"
+  testCompile "com.github.springtestdbunit:spring-test-dbunit:1.2.1"
   testCompile "org.springframework:spring-test:4.1.6.RELEASE"
   testCompile "org.mockito:mockito-core:1.9.5"
   testCompile "org.hamcrest:hamcrest-all:1.3"

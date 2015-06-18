@@ -6,4 +6,6 @@ gem "thor"
 
 gem 'git'
 
+gem 'activesupport', '~> 4.2.1'
+
 gemspec

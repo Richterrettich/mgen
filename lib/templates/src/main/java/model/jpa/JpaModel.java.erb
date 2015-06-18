@@ -1,0 +1,38 @@
+package <%=@package%>.model;
+
+<%=@licence%>
+
+import javax.persistence.Entity;
+
+/**
+ * Entity that represents <%=@model_name%>s.
+ * @author <%=@user_name%>
+ */
+@Entity
+public class <%=@model_name%> extends BaseEntity {
+
+  <%@attributes.each do |attribute| %>private <%="#{attribute.data_type} #{attribute.name}"%>;
+  <%end%>
+
+  public <%=@model_name%>(){}
+
+
+  /**
+   * a convenience constructor.
+   */
+  public  <%=@model_name%>(<%=@attributes.map {|attribute| "#{attribute.data_type} #{attribute.name}"}.join(',')%>) {
+
+    <%@attributes.each do |attribute|%>this.<%=attribute.name%> = <%=attribute.name%>;
+    <%end%>
+  }
+
+  <%@attributes.each do |attribute| %>
+  public void <%="set#{attribute.name.capitalize}(#{attribute.data_type} #{attribute.name})"%> {
+    this.<%=attribute.name%> = <%=attribute.name%>;
+  }
+
+  public <%="#{attribute.data_type} get#{attribute.name.capitalize}"%>() {
+    return this.<%=attribute.name%>;
+  }
+  <%end%>
+}

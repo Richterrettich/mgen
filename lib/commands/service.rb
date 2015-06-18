@@ -30,10 +30,10 @@ class Service < Thor::Group
 
   def prepare_project
     @repository_technique = options['repository_technique'] || 'jpa'
-    copy_file 'templates/licence.erb',"#{@name}/.spring-gen/licence.erb"
-    template 'templates/service.yml.erb',"#{@name}/.spring-gen/service.yml"
-    directory 'templates/layout/config',"#{@name}/config"
-    copy_file 'templates/layout/.gitignore',"#{@name}/.gitignore"
+    copy_file 'templates/project/licence.erb',"#{@name}/.spring-gen/licence.erb"
+    template 'templates/project/service.yml.erb',"#{@name}/.spring-gen/service.yml"
+    directory 'templates/config',"#{@name}/config"
+    copy_file 'templates/.gitignore',"#{@name}/.gitignore"
   end
 
   def init_git
@@ -44,11 +44,11 @@ class Service < Thor::Group
 
   def add_sources
     Dir.chdir(@name) {@licence = licence}
-    template 'templates/layout/src/java/main/App.java.erb',"#{@name}/src/main/java/#{@group_id.gsub(".","/")}/main/App.java"
-    template 'templates/layout/src/java/config/AppConfig.java.erb',"#{@name}/src/main/java/#{@group_id.gsub(".","/")}/config/AppConfig.java"
-    template 'templates/layout/src/resources/application.yml.erb',"#{@name}/src/main/resources/application.yml"
-    template 'templates/layout/src/resources/bootstrap.yml.erb',"#{@name}/src/main/resources/bootstrap.yml"
-    template 'templates/layout/build.gradle.erb',"#{@name}/build.gradle"
+    template 'templates/src/main/java/main/App.java.erb',"#{@name}/src/main/java/#{@group_id.gsub(".","/")}/main/App.java"
+    template 'templates/src/main/java/config/AppConfig.java.erb',"#{@name}/src/main/java/#{@group_id.gsub(".","/")}/config/AppConfig.java"
+    template 'templates/src/main/resources/application.yml.erb',"#{@name}/src/main/resources/application.yml"
+    template 'templates/src/main/resources/bootstrap.yml.erb',"#{@name}/src/main/resources/bootstrap.yml"
+    template "templates/gradle/#{@repository_technique}_build.gradle.erb","#{@name}/build.gradle"
 
   end
 
