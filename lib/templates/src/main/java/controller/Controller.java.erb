@@ -71,20 +71,20 @@ public class <%=@model_name%>Controller extends BaseController {
    * @return a response.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<<%=@model_name%>Resource> getOne(@PathVariable Long id) {
+  public ResponseEntity<<%=@model_name%>Resource> getOne(@PathVariable <%=@id_type%> id) {
     <%=@model_name%>Resource result
         = <%=@model_name.downcase%>Assembler.toResource(<%=@model_name.downcase%>Repository.findOne(id));
     return ResponseEntity.ok().body(result);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(@PathVariable Long id) {
+  public ResponseEntity<?> delete(@PathVariable <%=@id_type%> id) {
     <%=@model_name.downcase%>Repository.delete(id);
     return ResponseEntity.noContent().build();
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<?> update(@PathVariable Long id,
+  public ResponseEntity<?> update(@PathVariable <%=@id_type%> id,
                                   @RequestBody <%=@model_name%> newValues) {
     <%=@model_name.downcase%>Repository.save(newValues);
     return ResponseEntity.noContent().build();

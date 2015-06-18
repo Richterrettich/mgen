@@ -60,13 +60,16 @@ class Resource < Thor::Group
 
       case config.repository_technique
         when 'jpa'
+          @id_type = "Long"
           #TODO unify sample data. This check should not need to exist.
           template "templates/src/test/java/integration/#{config.repository_technique}/sampleData.xml.erb",
                    "#{content_root}/src/test/resources/sampledata/#{@model_name.downcase}SampleData.xml"
         when "mongodb"
+          @id_type = "String"
           template "templates/src/test/java/integration/#{config.repository_technique}/SampleData.java.erb",
                    "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
         when "neo4j"
+          @id_type = "Long"
           template "templates/src/test/java/integration/#{config.repository_technique}/SampleData.java.erb",
                    "#{content_root}/src/test/java/#{fs_path}/integration/#{@model_name.downcase}/#{@model_name}SampleData.java"
         else
