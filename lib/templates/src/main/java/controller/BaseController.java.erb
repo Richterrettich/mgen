@@ -42,12 +42,4 @@ public abstract class BaseController {
   public String handleNotFound(ResourceNotFoundException ex) {
    return ex.toString();
   }
-
-
-
-  @ExceptionHandler(NotCreatedException.class)
-  @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-  public String handleNotCreated(NotCreatedException ex) {
-    return "couldn't create resource";
-  }
 }
