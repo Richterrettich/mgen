@@ -1,0 +1,25 @@
+package <%=@package%>.service;
+
+<%=@licence%>
+
+import <%=@package%>.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+/**
+ * Service to load a user by username.
+ * @author <%=@user_name%>
+ */
+@Service
+public class UserService implements UserDetailsService {
+
+  @Autowired
+  private UserRepository userRepository;
+
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return userRepository.findByEmail(username);
+  }
+}
