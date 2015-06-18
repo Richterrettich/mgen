@@ -86,6 +86,7 @@ public class <%=@model_name%>Controller extends BaseController {
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
   public ResponseEntity<?> update(@PathVariable <%=@id_type%> id,
                                   @RequestBody <%=@model_name%> newValues) {
+    newValues.setId(id);
     <%=@model_name.downcase%>Repository.save(newValues);
     return ResponseEntity.noContent().build();
   }
