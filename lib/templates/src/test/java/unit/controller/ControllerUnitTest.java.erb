@@ -70,7 +70,7 @@ public class <%=@model_name%>ControllerUnitTest {
     List<<%=@model_name%>> sampleData = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
       <%=@model_name%> instance = new <%=@model_name%>();
-      instance.setId(i);
+      instance.setId(<%=augment_test_id("i")%>);
       sampleData.add(instance);
     }
     Page<<%=@model_name%>> page = new PageImpl<>(sampleData);

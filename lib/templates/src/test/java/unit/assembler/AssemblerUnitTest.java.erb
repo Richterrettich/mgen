@@ -32,7 +32,7 @@ public class <%=@model_name%>AssemblerUnitTest {
   @Test
   public void testToResource() throws Exception {
     <%=@model_name%> instance = new <%=@model_name%>();
-    instance.setId(1L);
+    instance.setId(<%=augment_test_id(1)%>);
     ResourceSupport resourceSupport = testInstance.toResource(instance);
     assertEquals("self",resourceSupport.getId().getRel());
   }

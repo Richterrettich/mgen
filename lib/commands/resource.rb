@@ -114,4 +114,15 @@ class Resource < Thor::Group
     end
   end
 
+  no_tasks do
+    def augment_test_id(id)
+      case @id_type
+        when "String" then "String.valueOf(#{id})"
+        when "Long" then "Long.valueOf(#{id})"
+        else id
+      end
+    end
+  end
+
+
 end
