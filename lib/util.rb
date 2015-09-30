@@ -1,5 +1,6 @@
 require 'yaml'
 require 'erb'
+require 'pathname'
 
 module Util
   Config = Struct.new(:service_name,:repository_technique,:group_id,:artifact_id)
